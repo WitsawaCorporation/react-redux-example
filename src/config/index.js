@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV || 'defaultConfig';
-let baseUrl = 'http://localhost:3000';
+let baseUrl = 'http://localhost:8080';
 const defaultConfig = {
   baseUrl,
   apiUrl: `${baseUrl}/api/`,

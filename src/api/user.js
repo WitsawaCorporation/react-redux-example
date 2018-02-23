@@ -1,4 +1,5 @@
-import Resource from 'utils/resource';
+// import Resource from '../utils/resource';
+import Resource from '../utils/resource';
 
 export default new Resource('/users', {
   login: {

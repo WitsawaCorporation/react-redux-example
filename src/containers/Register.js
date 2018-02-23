@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Layout, Form, Input, Button
 } from 'antd';
+import { session } from '../redux/modules';
 
 const { Content } = Layout;
 const FormItem = Form.Item;
@@ -20,6 +22,7 @@ class Register extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.props.register(values)
       }
     });
   }
@@ -123,4 +126,11 @@ class Register extends Component {
   }
 }
 
-export default Form.create()(Register);
+const mapStateToProps = state => ({
+  // isAuth: state.session.isAuth,
+});
+const mapDispatchToProps = dispatch => ({
+  register: (data) => dispatch(session.actions.register(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Register));
