@@ -8,7 +8,7 @@ const initialState = {
   user: false,
   loading: false,
   error: false,
-  registerResult: false
+  registerResult: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -35,8 +35,8 @@ export default function reducer(state = initialState, action = {}) {
     case SET_DATA:
       return {
         ...state,
-        data: action.data
-      }
+        data: action.data,
+      };
     default:
       return state;
   }

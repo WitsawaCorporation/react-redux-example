@@ -1,7 +1,7 @@
-import { UserAPI } from '../../../api'
+import { UserAPI } from '../../../api';
 import {
   REGISTER,
-  SET_DATA
+  SET_DATA,
 } from './constants';
 
 export const register = credentials => (dispatch) => {
@@ -12,5 +12,5 @@ export const register = credentials => (dispatch) => {
 };
 
 export const setData = data => (dispatch) => {
-  dispatch({ type: SET_DATA, data })
-}
+  dispatch({ type: SET_DATA, data });
+};

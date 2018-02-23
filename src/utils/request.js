@@ -80,7 +80,7 @@ export default async (data, options, extraOptions) => {
     };
     if (localStorage.getItem(ACCESSTOKEN_KEY)) {
       try {
-        let token = JSON.parse(localStorage.getItem(ACCESSTOKEN_KEY));
+        const token = JSON.parse(localStorage.getItem(ACCESSTOKEN_KEY));
         // if (Date.now() - token.createdAt >= token.TTL - 120) {
         //   // call refresh token
         //   await refreshToken(token.refreshToken);

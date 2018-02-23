@@ -1,4 +1,5 @@
 import request from './request';
+
 class Resource {
   constructor(url, customActions) {
     this.url = url;

@@ -1,9 +1,13 @@
 import React from 'react';
 
 export default class Login extends React.Component {
-  render () {
+  constructor() {
+    super();
+    this.state = {};
+  }
+  render() {
     return (
       <div>Login</div>
-    )
+    );
   }
 }

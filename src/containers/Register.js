@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Layout, Form, Input, Button
+  Layout,
+  Form,
+  Input,
+  Button,
 } from 'antd';
 import { session } from '../redux/modules';
 
@@ -10,7 +14,7 @@ const FormItem = Form.Item;
 
 class Register extends Component {
   checkPassword = (rule, value, callback) => {
-    const form = this.props.form;
+    const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
@@ -21,12 +25,11 @@ class Register extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        this.props.register(values)
+        this.props.register(values);
       }
     });
   }
-  render () {
+  render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -60,9 +63,7 @@ class Register extends Component {
             >
               {getFieldDecorator('firstName', {
                 rules: [{ required: true, message: 'Please input your firstname!', whitespace: true }],
-              })(
-                <Input />
-              )}
+              })(<Input />)}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -70,9 +71,7 @@ class Register extends Component {
             >
               {getFieldDecorator('lastName', {
                 rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
-              })(
-                <Input />
-              )}
+              })(<Input />)}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -84,9 +83,7 @@ class Register extends Component {
                 }, {
                   required: true, message: 'Please input your E-mail!',
                 }],
-              })(
-                <Input />
-              )}
+              })(<Input />)}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -98,9 +95,7 @@ class Register extends Component {
                 }, {
                   validator: this.checkConfirm,
                 }],
-              })(
-                <Input type="password" />
-              )}
+              })(<Input type="password" />)}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -112,9 +107,7 @@ class Register extends Component {
                 }, {
                   validator: this.checkPassword,
                 }],
-              })(
-                <Input type="password" onBlur={this.handleConfirmBlur} />
-              )}
+              })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">Register</Button>
@@ -122,15 +115,23 @@ class Register extends Component {
           </Form>
         </Content>
       </Layout>
-    )
+    );
   }
 }
 
+Register.propTypes = {
+  form: PropTypes.shape({
+    validateFieldsAndScroll: PropTypes.func,
+    getFieldDecorator: PropTypes.func,
+  }).isRequired,
+  register: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
-  // isAuth: state.session.isAuth,
+  isAuth: state.session.isAuth,
 });
 const mapDispatchToProps = dispatch => ({
-  register: (data) => dispatch(session.actions.register(data)),
+  register: data => dispatch(session.actions.register(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Register));
