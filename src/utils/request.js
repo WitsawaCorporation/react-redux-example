@@ -28,22 +28,22 @@ function buildURLFromTemplate(data, options) {
     url: outputURL,
   };
 }
-async function refreshToken(token) {
-  const options = {
-    method: 'post',
-    url: '/users/token',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  try {
-    const response = await axios.request(options);
-    localStorage.setItem(ACCESSTOKEN_KEY, JSON.stringify(response.data));
-    return response;
-  } catch (e) {
-    throw e;
-  }
-}
+// async function refreshToken(token) {
+//   const options = {
+//     method: 'post',
+//     url: '/users/token',
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+//   try {
+//     const response = await axios.request(options);
+//     localStorage.setItem(ACCESSTOKEN_KEY, JSON.stringify(response.data));
+//     return response;
+//   } catch (e) {
+//     throw e;
+//   }
+// }
 export default async (data, options, extraOptions) => {
   const config = {};
   const { data: outputData, url } = buildURLFromTemplate(data, options);
@@ -81,11 +81,11 @@ export default async (data, options, extraOptions) => {
     if (localStorage.getItem(ACCESSTOKEN_KEY)) {
       try {
         let token = JSON.parse(localStorage.getItem(ACCESSTOKEN_KEY));
-        if (Date.now() - token.createdAt >= token.TTL - 120) {
-          // call refresh token
-          await refreshToken(token.refreshToken);
-          token = JSON.parse(localStorage.getItem(ACCESSTOKEN_KEY));
-        }
+        // if (Date.now() - token.createdAt >= token.TTL - 120) {
+        //   // call refresh token
+        //   await refreshToken(token.refreshToken);
+        //   token = JSON.parse(localStorage.getItem(ACCESSTOKEN_KEY));
+        // }
         // check if require refresh token
         config.headers.Authorization = `Bearer ${token.id}`;
       } catch (e) {
