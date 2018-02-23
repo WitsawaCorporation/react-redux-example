@@ -1,5 +1,6 @@
 import {
-  REGISTER
+  REGISTER,
+  SET_DATA,
 } from './constants';
 
 const initialState = {
@@ -31,6 +32,11 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         error: action.error,
       };
+    case SET_DATA:
+      return {
+        ...state,
+        data: action.data
+      }
     default:
       return state;
   }

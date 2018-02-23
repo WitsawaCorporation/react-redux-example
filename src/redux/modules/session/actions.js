@@ -1,6 +1,7 @@
 import { UserAPI } from '../../../api'
 import {
-  REGISTER
+  REGISTER,
+  SET_DATA
 } from './constants';
 
 export const register = credentials => (dispatch) => {
@@ -9,3 +10,7 @@ export const register = credentials => (dispatch) => {
     .then(response => dispatch({ type: REGISTER.success, payload: response }))
     .catch(error => dispatch({ type: REGISTER.failure, error }));
 };
+
+export const setData = data => (dispatch) => {
+  dispatch({ type: SET_DATA, data })
+}
