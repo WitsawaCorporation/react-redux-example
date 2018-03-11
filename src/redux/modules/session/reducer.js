@@ -1,6 +1,7 @@
 import {
   REGISTER,
   SET_DATA,
+  GET_USER_ME,
 } from './constants';
 
 const initialState = {
@@ -27,6 +28,25 @@ export default function reducer(state = initialState, action = {}) {
         registerResult: action.payload,
       };
     case REGISTER.failure:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case GET_USER_ME.request:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    case GET_USER_ME.success:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        user: action.payload,
+      };
+    case GET_USER_ME.failure:
       return {
         ...state,
         loading: false,

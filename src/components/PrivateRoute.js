@@ -12,43 +12,61 @@ const isAuth = () => {
 
 class PrivateRoute extends Component {
   state = {};
-  // componentWillMount() {
-  //   this.props.getUser();
-  // }
+
+  componentWillMount() {
+    this.props.getUserMe();
+  }
 
   render() {
-    const { component: MyComponent, ...rest } = this.props;
+    const {
+      component: MyComponent,
+      roles,
+      user,
+      ...rest
+    } = this.props;
+    const validRole = roles.include(user.role);
+    if (isAuth() && validRole) {
+      return (
+        <Route
+          {...rest}
+          render={props => <MyComponent {...props} />}
+        />
+      );
+    }
     return (
       <Route
         {...rest}
         render={props => (
-          isAuth() ? (
-            <MyComponent {...props} />
-          ) : (
-            <Redirect to={{
-                pathname: '/login',
-                state: { from: props.location },
-              }}
-            />
-          )
+          <Redirect to={{
+              pathname: '/login',
+              state: { from: props.location },
+            }}
+          />
         )}
       />
     );
   }
 }
 
+PrivateRoute.defaultProps = {
+  roles: ['buyer'],
+};
+
 PrivateRoute.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string),
   component: PropTypes.func.isRequired,
   location: PropTypes.shape({}).isRequired,
-  // getUser: PropTypes.func.isRequired,
+  getUserMe: PropTypes.func.isRequired,
+  user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   // isAuth: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  isAuth: state.session.isAuth,
+  // isAuth: state.session.isAuth,
+  user: state.session.user,
 });
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(session.actions.getUser()),
+  getUserMe: () => dispatch(session.actions.getUserMe()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);

@@ -1,9 +1,8 @@
 import axios from 'axios';
-// import { ACCESSTOKEN_KEY } from 'containers/App/constants';
 import _config from '../config';
 
 const baseURL = _config.apiUrl;
-const ACCESSTOKEN_KEY = localStorage.getItem('accessToken');
+const ACCESSTOKEN_KEY = 'accessToken';
 
 axios.defaults.baseURL = baseURL;
 function buildURLFromTemplate(data, options) {
